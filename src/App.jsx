@@ -1,15 +1,20 @@
 import { useReducer } from "react";
 import { mockQuiz } from "./data/mockQuiz.js";
+import { getRandomItems } from "./utils/getRandomItems.js";
 
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
 import StartScreen from "./components/StartScreen";
+import QuestionScreen from "./components/QuestionScreen.jsx";
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
   totalQuestions: mockQuiz.questions,
   questionCount: 5,
   status: "ready",
+  index: null,
+  answer: null,
+  points: 0,
 };
 
 function reducer(state, action) {
@@ -30,13 +35,26 @@ function reducer(state, action) {
       return {
         ...state,
         questionCount: action.payload,
-        questions: state.totalQuestions.slice(0, action.payload),
+        questions: getRandomItems(state.totalQuestions, action.payload),
       };
 
     case "startQuiz":
       return {
         ...state,
         status: "active",
+        index: 0,
+      };
+
+    case "selectAnswer":
+      return {
+        ...state,
+        answer: action.payload,
+      };
+
+    case "nextQuestion":
+      return {
+        ...state,
+        index: state.index + 1,
       };
 
     default:
@@ -47,16 +65,15 @@ function reducer(state, action) {
 function init(initial) {
   return {
     ...initial,
-    questions: initial.totalQuestions.slice(0, initial.questionCount),
+    questions: getRandomItems(initial.totalQuestions, initial.questionCount),
   };
 }
 
 export default function App() {
-  const [{ status, questionCount }, dispatch] = useReducer(
-    reducer,
-    initialState,
-    init,
-  );
+  const [
+    { status, questionCount, questions, index, answer, points },
+    dispatch,
+  ] = useReducer(reducer, initialState, init);
 
   return (
     <div>
@@ -64,6 +81,13 @@ export default function App() {
       {status === "loading" && <LoadingScreen dispatch={dispatch} />}
       {status === "ready" && (
         <StartScreen dispatch={dispatch} questionCount={questionCount} />
+      )}
+      {status === "active" && (
+        <QuestionScreen
+          dispatch={dispatch}
+          curQuestion={questions[index]}
+          answer={answer}
+        />
       )}
     </div>
   );
