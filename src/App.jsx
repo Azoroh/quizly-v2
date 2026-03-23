@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
+import StartScreen from "./components/StartScreen";
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
@@ -13,6 +14,12 @@ function reducer(state, action) {
       return {
         ...state,
         status: "loading",
+      };
+
+    case "ready":
+      return {
+        ...state,
+        status: "ready",
       };
 
     default:
@@ -31,6 +38,7 @@ export default function App() {
     <div>
       {status === "landing" && <LandingScreen dispatch={dispatch} />}
       {status === "loading" && <LoadingScreen dispatch={dispatch} />}
+      {status === "ready" && <StartScreen dispatch={dispatch} />}
     </div>
   );
 }
