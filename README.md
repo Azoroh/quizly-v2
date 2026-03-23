@@ -1,16 +1,72 @@
-# React + Vite
+# 🧠 Quizly
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Turn your study material into a personalized AI-powered quiz — instantly.
 
-Currently, two official plugins are available:
+Quizly is a premium AI study tool that lets users paste notes or upload a PDF/document and generates a comprehensive, personalized quiz from that material.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 **[Live Preview](https://jay-quizly-v2.netlify.app)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+- **React** + **Vite**
+- **Tailwind CSS v3**
+- **Google Fonts** — Inter, Manrope
+- **Material Symbols** — Google icon library
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- npm
+
+### Install & Run
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+---
+
+## 📱 Screens
+
+| Screen           | Description                                       |
+| ---------------- | ------------------------------------------------- |
+| `LandingScreen`  | Hero, input panel, bento feature grid             |
+| `LoadingScreen`  | AI processing state with animated progress stages |
+| `StartScreen`    | Quiz intro — title, question count, start button  |
+| `QuestionScreen` | Active quiz — question, options, timer, progress  |
+| `ResultScreen`   | Score breakdown and review                        |
+
+---
+
+## ✨ Features
+
+- Paste study text or upload a PDF/document
+- AI generates a personalized multiple choice quiz
+- Timed questions with a countdown timer
+- Score tracking and high score persistence
+- Detailed results and review after each quiz
+
+---
+
+## 🎨 Design
+
+UI designed in **Google Stitch**, converted to React + Tailwind. Dark theme with a custom Material Design 3 color system — deep blacks, violet primary, and soft atmospheric bloom effects.
+
+---
+
+## 📝 License
+
+MIT
