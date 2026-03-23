@@ -5,7 +5,10 @@ import { getRandomItems } from "./utils/getRandomItems.js";
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
 import StartScreen from "./components/StartScreen";
-import QuestionScreen from "./components/QuestionScreen.jsx";
+import QuestionScreen from "./components/QuestionScreen";
+import ResultScreen from "./components/ResultScreen";
+
+const POINTS_PER_QUESTION = 10;
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
@@ -54,7 +57,22 @@ function reducer(state, action) {
     case "nextQuestion":
       return {
         ...state,
+        answer: null,
         index: state.index + 1,
+        points:
+          state.answer === state.questions[state.index].correctOption
+            ? state.points + POINTS_PER_QUESTION
+            : state.points,
+      };
+
+    case "finalQuestion":
+      return {
+        ...state,
+        status: "finished",
+        points:
+          state.answer === state.questions[state.index].correctOption
+            ? state.points + POINTS_PER_QUESTION
+            : state.points,
       };
 
     default:
@@ -75,6 +93,8 @@ export default function App() {
     dispatch,
   ] = useReducer(reducer, initialState, init);
 
+  console.log(points);
+
   return (
     <div>
       {status === "landing" && <LandingScreen dispatch={dispatch} />}
@@ -87,8 +107,12 @@ export default function App() {
           dispatch={dispatch}
           curQuestion={questions[index]}
           answer={answer}
+          questions={questions}
+          index={index}
         />
       )}
+
+      {status === "finished" && <ResultScreen />}
     </div>
   );
 }

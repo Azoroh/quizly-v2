@@ -3,10 +3,16 @@ import QuestionHeader from "./question/QuestionHeader";
 import QuestionFooter from "./question/QuestionFooter";
 import OptionsList from "./question/OptionsList";
 
-export default function QuestionScreen({ dispatch, curQuestion, answer }) {
+export default function QuestionScreen({
+  dispatch,
+  curQuestion,
+  answer,
+  index,
+  questions,
+}) {
   // const [selected, setSelected] = useState(null);
 
-  console.log(curQuestion);
+  // console.log(curQuestion);
 
   return (
     <div className="dark bg-background text-on-surface min-h-screen flex flex-col overflow-x-hidden">
@@ -40,7 +46,19 @@ export default function QuestionScreen({ dispatch, curQuestion, answer }) {
               correctOption={curQuestion.correctOption}
             />
 
-            <QuestionFooter answer={answer} />
+            <QuestionFooter
+              answer={answer}
+              onClick={
+                index !== questions.length - 1
+                  ? () => dispatch({ type: "nextQuestion" })
+                  : () => dispatch({ type: "finalQuestion" })
+              }
+              buttonText={
+                index !== questions.length - 1
+                  ? "Next Question"
+                  : "Final Question"
+              }
+            />
           </QuestionCard>
         </div>
       </main>

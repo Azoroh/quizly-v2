@@ -6,7 +6,7 @@ export default function OptionsList({
   options,
   correctOption,
 }) {
-  console.log(correctOption);
+  // console.log(correctOption);
 
   const hasSelected = answer !== null;
 
