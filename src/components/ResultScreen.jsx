@@ -1,7 +1,7 @@
 import ResultHeader from "./result/ResultHeader";
 import ScoreDisplay from "./result/ScoreDisplay";
 import SummaryStats from "./result/SummaryStats";
-import AIInsightPanel from "./result/AiSummaryPanel";
+import AIInsightPanel from "./result/AISummaryPanel";
 import ResultActions from "./result/ResultActions";
 import { formatTime } from "../utils/formatTime";
 
