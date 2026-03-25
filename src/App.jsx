@@ -10,17 +10,18 @@ import QuestionScreen from "./components/QuestionScreen";
 import ResultScreen from "./components/ResultScreen";
 
 const POINTS_PER_QUESTION = 10;
-const SECS_PER_QUESTION = 10;
+const SECS_PER_QUESTION = 5;
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
   totalQuestions: mockQuiz.questions,
   questionCount: 5,
-  status: "finished",
+  status: "ready",
   index: null,
   answer: null,
   points: 0,
   remainingSeconds: 0,
+  quizSeconds: 0,
 };
 
 function reducer(state, action) {
@@ -37,19 +38,25 @@ function reducer(state, action) {
         status: "ready",
       };
 
-    case "selectQuestionCount":
+    case "selectQuestionCount": {
+      const selectedQuestions = getRandomItems(
+        state.totalQuestions,
+        action.payload,
+      );
+
       return {
         ...state,
         questionCount: action.payload,
-        questions: getRandomItems(state.totalQuestions, action.payload),
+        questions: selectedQuestions,
+        remainingSeconds: selectedQuestions.length * SECS_PER_QUESTION,
       };
+    }
 
     case "startQuiz":
       return {
         ...state,
         status: "active",
         index: 0,
-        remainingSeconds: state.questions.length * SECS_PER_QUESTION,
       };
 
     case "selectAnswer":
@@ -77,6 +84,24 @@ function reducer(state, action) {
           state.points > state.highScore ? state.points : state.highScore,
       };
 
+    case "restart":
+      return {
+        ...state,
+        answer: null,
+        index: null,
+        points: 0,
+        remainingSeconds: state.questions.length * SECS_PER_QUESTION,
+        status: "ready",
+      };
+
+    case "tickTock":
+      return {
+        ...state,
+        remainingSeconds: state.remainingSeconds - 1,
+        status: state.remainingSeconds === 0 ? "finished" : state.status,
+        quizSeconds: state.quizSeconds + 1,
+      };
+
     default:
       throw new Error("Unknown Action");
   }
@@ -84,33 +109,56 @@ function reducer(state, action) {
 
 function init(initial) {
   const savedHscore = JSON.parse(localStorage.getItem("highscore"));
+  const savedQuestions = getRandomItems(
+    initial.totalQuestions,
+    initial.questionCount,
+  );
 
   return {
     ...initial,
-    questions: getRandomItems(initial.totalQuestions, initial.questionCount),
+    questions: savedQuestions,
     highScore: savedHscore || 0,
+    remainingSeconds: savedQuestions.length * SECS_PER_QUESTION,
   };
 }
 
 export default function App() {
   const [
-    { status, questionCount, questions, index, answer, points, highScore },
+    {
+      status,
+      questionCount,
+      questions,
+      index,
+      answer,
+      points,
+      highScore,
+      remainingSeconds,
+      quizSeconds,
+    },
     dispatch,
   ] = useReducer(reducer, initialState, init);
 
   useLocalStorage("highscore", highScore);
 
-  console.log(points);
+  // console.log(points);
   const maxPossiblePoints = questions.length * POINTS_PER_QUESTION;
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
+
+  // console.log(remainingSeconds);
 
   return (
     <div>
       {status === "landing" && <LandingScreen dispatch={dispatch} />}
       {status === "loading" && <LoadingScreen dispatch={dispatch} />}
+
       {status === "ready" && (
-        <StartScreen dispatch={dispatch} questionCount={questionCount} />
+        <StartScreen
+          dispatch={dispatch}
+          questionCount={questionCount}
+          questions={questions}
+          remainingSeconds={remainingSeconds}
+        />
       )}
       {status === "active" && (
         <QuestionScreen
@@ -119,16 +167,19 @@ export default function App() {
           answer={answer}
           questions={questions}
           index={index}
+          remainingSeconds={remainingSeconds}
         />
       )}
 
       {status === "finished" && (
         <ResultScreen
+          dispatch={dispatch}
           points={points}
           maxPossiblePoints={maxPossiblePoints}
           highScore={highScore}
           correctAnswers={correctAnswers}
           accuracyPercent={accuracyPercent}
+          quizSeconds={quizSeconds}
         />
       )}
     </div>

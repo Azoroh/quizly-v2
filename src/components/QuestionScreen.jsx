@@ -1,3 +1,5 @@
+import { getProgressPercent } from "../utils/getProgressPercent";
+
 import QuestionCard from "./question/QuestionCard";
 import QuestionHeader from "./question/QuestionHeader";
 import QuestionFooter from "./question/QuestionFooter";
@@ -9,6 +11,7 @@ export default function QuestionScreen({
   answer,
   index,
   questions,
+  remainingSeconds,
 }) {
   // const [selected, setSelected] = useState(null);
 
@@ -30,7 +33,13 @@ export default function QuestionScreen({
       <main className="flex-grow flex items-center justify-center px-4 pt-24 pb-12">
         <div className="w-full max-w-3xl">
           <QuestionCard answer={answer}>
-            <QuestionHeader current={3} total={15} time="07:42" />
+            <QuestionHeader
+              dispatch={dispatch}
+              remainingSeconds={remainingSeconds}
+              current={index + 1}
+              total={questions.length}
+              progress={getProgressPercent(index, answer, questions.length)}
+            />
 
             {/* Question Text */}
             <div className="mb-12">

@@ -3,6 +3,7 @@ import ScoreDisplay from "./result/ScoreDisplay";
 import SummaryStats from "./result/SummaryStats";
 import AIInsightPanel from "./result/AiSummaryPanel";
 import ResultActions from "./result/ResultActions";
+import { formatTime } from "../utils/formatTime";
 
 export default function ResultScreen({
   points,
@@ -10,6 +11,8 @@ export default function ResultScreen({
   highScore,
   correctAnswers,
   accuracyPercent,
+  quizSeconds,
+  dispatch,
 }) {
   return (
     <div className="dark bg-surface font-body text-on-surface selection:bg-primary/30 min-h-screen flex flex-col">
@@ -31,10 +34,10 @@ export default function ResultScreen({
             <SummaryStats
               correctAnswers={correctAnswers}
               accuracyPercent={accuracyPercent}
-              time="6m 42s"
+              time={`${formatTime(quizSeconds)} min`}
             />
             <AIInsightPanel />
-            <ResultActions />
+            <ResultActions onRestart={() => dispatch({ type: "restart" })} />
           </div>
         </div>
       </main>

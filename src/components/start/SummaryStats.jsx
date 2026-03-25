@@ -1,9 +1,10 @@
+import { formatTime } from "../../utils/formatTime";
+
 const stats = [
   {
     icon: "quiz",
     label: "questions",
     value: "15 Total",
-    // value: "15 Total",
     color: "text-primary-dim",
     hover: "hover:border-primary/20",
   },
@@ -17,13 +18,13 @@ const stats = [
   {
     icon: "schedule",
     label: "time",
-    value: "8 min",
+    value: `8 min`,
     color: "text-secondary-dim",
     hover: "hover:border-secondary/20",
   },
 ];
 
-export default function SummaryStats({ questionCount }) {
+export default function SummaryStats({ questionCount, remainingSeconds }) {
   return (
     <div className="grid grid-cols-3 gap-3 md:gap-4">
       {stats.map(({ icon, label, value, color, hover }) => (
@@ -38,7 +39,9 @@ export default function SummaryStats({ questionCount }) {
             {label}
           </span>
           <span className="text-base font-bold text-on-surface">
-            {label === "questions" ? `${questionCount} Total` : value}
+            {label !== "questions" && label !== "time" && value}
+            {label === "questions" && `${questionCount} Total`}
+            {label === "time" && `${formatTime(remainingSeconds, true)} min`}
           </span>
         </div>
       ))}

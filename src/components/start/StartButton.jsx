@@ -2,6 +2,7 @@ export default function StartButton({ onClick }) {
   return (
     <div className="w-full">
       <button
+        // disabled={questions}
         onClick={onClick}
         className="group relative w-full h-14 rounded-full overflow-hidden bg-gradient-to-r from-primary to-primary-dim font-headline font-bold text-base text-on-primary shadow-lg shadow-primary/20 active:scale-[0.98] transition-all"
       >

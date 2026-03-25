@@ -1,5 +1,13 @@
-export default function QuestionHeader({ current, total, time }) {
-  const progress = Math.round((current / total) * 100);
+import QuestionTimer from "./QuestionTimer";
+
+export default function QuestionHeader({
+  current,
+  total,
+  remainingSeconds,
+  dispatch,
+  progress,
+}) {
+  // const progress = Math.round((current / total) * 100);
 
   return (
     <div className="flex flex-col gap-6 mb-10">
@@ -7,14 +15,11 @@ export default function QuestionHeader({ current, total, time }) {
         <h2 className="text-on-surface font-headline font-bold text-xl">
           Question {current} of {total}
         </h2>
-        <div className="flex items-center gap-2 bg-black/30 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-sm">
-          <span className="material-symbols-outlined text-primary text-[18px]">
-            schedule
-          </span>
-          <span className="font-headline font-bold text-primary tracking-tight text-sm">
-            {time}
-          </span>
-        </div>
+
+        <QuestionTimer
+          remainingSeconds={remainingSeconds}
+          dispatch={dispatch}
+        />
       </div>
 
       {/* Progress Bar */}

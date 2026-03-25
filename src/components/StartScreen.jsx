@@ -4,7 +4,12 @@ import SummaryStats from "./start/SummaryStats";
 import QuestionSelector from "./start/QuestionSelector";
 import StartButton from "./start/StartButton";
 
-export default function StartScreen({ dispatch, questionCount }) {
+export default function StartScreen({
+  dispatch,
+  questionCount,
+  questions,
+  remainingSeconds,
+}) {
   return (
     <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative">
       {/* Atmospheric Background */}
@@ -29,11 +34,17 @@ export default function StartScreen({ dispatch, questionCount }) {
             </span>
           </div>
 
-          <SummaryStats questionCount={questionCount} />
+          <SummaryStats
+            questionCount={questionCount}
+            remainingSeconds={remainingSeconds}
+          />
 
           <QuestionSelector dispatch={dispatch} questionCount={questionCount} />
 
-          <StartButton onClick={() => dispatch({ type: "startQuiz" })} />
+          <StartButton
+            onClick={() => dispatch({ type: "startQuiz" })}
+            questions={questions}
+          />
         </div>
       </main>
 
