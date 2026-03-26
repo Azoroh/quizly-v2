@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { mockQuiz } from "./data/mockQuiz.js";
 import { getRandomItems } from "./utils/getRandomItems.js";
 import { useLocalStorage } from "./hooks/useLocalStorage.js";
+// import { generateQuiz } from "./services/generateQuiz.js";
 
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
@@ -15,17 +16,25 @@ const SECS_PER_QUESTION = 5;
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
   totalQuestions: mockQuiz.questions,
+  // totalQuestions: generateQuiz("hey"),
   questionCount: 5,
-  status: "ready",
+  status: "landing",
   index: null,
   answer: null,
   points: 0,
   remainingSeconds: 0,
   quizSeconds: 0,
+  inputText: "",
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case "textInput":
+      return {
+        ...state,
+        inputText: action.payload,
+      };
+
     case "generateQuiz":
       return {
         ...state,
@@ -36,6 +45,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "ready",
+        totalQuestions: action.payload,
       };
 
     case "selectQuestionCount": {
@@ -134,23 +144,25 @@ export default function App() {
       highScore,
       remainingSeconds,
       quizSeconds,
+      inputText,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
 
   useLocalStorage("highscore", highScore);
 
-  // console.log(points);
   const maxPossiblePoints = questions.length * POINTS_PER_QUESTION;
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
 
-  // console.log(remainingSeconds);
-
   return (
     <div>
-      {status === "landing" && <LandingScreen dispatch={dispatch} />}
-      {status === "loading" && <LoadingScreen dispatch={dispatch} />}
+      {status === "landing" && (
+        <LandingScreen dispatch={dispatch} inputText={inputText} />
+      )}
+      {status === "loading" && (
+        <LoadingScreen dispatch={dispatch} inputText={inputText} />
+      )}
 
       {status === "ready" && (
         <StartScreen

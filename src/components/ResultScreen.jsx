@@ -4,6 +4,7 @@ import SummaryStats from "./result/SummaryStats";
 import AIInsightPanel from "./result/AISummaryPanel";
 import ResultActions from "./result/ResultActions";
 import { formatTime } from "../utils/formatTime";
+import StartHeader from "./start/StartHeader";
 
 export default function ResultScreen({
   points,
@@ -16,12 +17,13 @@ export default function ResultScreen({
 }) {
   return (
     <div className="dark bg-surface font-body text-on-surface selection:bg-primary/30 min-h-screen flex flex-col">
-      {/* Background Decorations */}
-      <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-primary-dim opacity-[0.04] blur-[140px] rounded-full -mr-80 -mt-80 pointer-events-none"></div>
-      <div className="fixed bottom-0 left-0 w-[600px] h-[600px] bg-secondary opacity-[0.04] blur-[140px] rounded-full -ml-80 -mb-80 pointer-events-none"></div>
-      <div className="fixed inset-0 bg-glow pointer-events-none"></div>
+      {/* Atmospheric Background */}
+      <div className="fixed inset-0 glow-bg pointer-events-none z-0"></div>
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <ResultHeader />
+      {/* <ResultHeader /> */}
+      <StartHeader />
 
       <main className="flex-grow flex items-center justify-center px-6 py-24">
         <div className="w-full max-w-3xl">
@@ -37,7 +39,10 @@ export default function ResultScreen({
               time={`${formatTime(quizSeconds)} min`}
             />
             <AIInsightPanel />
-            <ResultActions onRestart={() => dispatch({ type: "restart" })} />
+            <ResultActions
+              onRestart={() => dispatch({ type: "restart" })}
+              onNewQuiz={dispatch({ type: "newQuiz" })}
+            />
           </div>
         </div>
       </main>

@@ -4,6 +4,7 @@ import QuestionCard from "./question/QuestionCard";
 import QuestionHeader from "./question/QuestionHeader";
 import QuestionFooter from "./question/QuestionFooter";
 import OptionsList from "./question/OptionsList";
+import StartHeader from "./start/StartHeader";
 
 export default function QuestionScreen({
   dispatch,
@@ -19,16 +20,18 @@ export default function QuestionScreen({
 
   return (
     <div className="dark bg-background text-on-surface min-h-screen flex flex-col overflow-x-hidden">
-      {/* Atmospheric Blooms */}
-      <div className="fixed -top-48 -left-48 w-[600px] h-[600px] bg-radial-bloom pointer-events-none -z-10 blur-[40px]"></div>
-      <div className="fixed -bottom-48 -right-48 w-[600px] h-[600px] bg-radial-bloom pointer-events-none -z-10 blur-[40px]"></div>
+      {/* Atmospheric Background */}
+      <div className="fixed inset-0 glow-bg pointer-events-none z-0"></div>
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       {/* Nav */}
-      <nav className="flex justify-center items-center w-full px-6 py-8 fixed top-0 z-50">
+      <StartHeader />
+      {/* <nav className="flex justify-center items-center w-full px-6 py-8 fixed top-0 z-50">
         <div className="text-2xl font-black text-primary tracking-tight font-headline">
           Quizly
         </div>
-      </nav>
+      </nav> */}
 
       <main className="flex-grow flex items-center justify-center px-4 pt-24 pb-12">
         <div className="w-full max-w-3xl">

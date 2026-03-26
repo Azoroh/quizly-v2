@@ -1,4 +1,4 @@
-export default function Hero({ dispatch }) {
+export default function Hero({ dispatch, inputText }) {
   return (
     <div className="max-w-4xl mx-auto text-center">
       <h1 className="font-headline text-5xl md:text-7xl font-black tracking-tight mb-8 leading-[1.1] text-white">
@@ -17,6 +17,10 @@ export default function Hero({ dispatch }) {
           <textarea
             className="w-full min-h-[240px] bg-transparent border-none focus:ring-0 text-on-surface text-lg placeholder:text-on-surface-variant/50 resize-none font-medium"
             placeholder="Paste your notes, textbook excerpt, or study material here to generate a quiz instantly..."
+            onChange={(e) =>
+              dispatch({ type: "textInput", payload: e.target.value })
+            }
+            value={inputText}
           />
           <div className="flex flex-col md:flex-row justify-between items-center mt-6 pt-6 border-t border-white/5 gap-4">
             <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all duration-200 border border-white/5">

@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import LoadingHeader from "./loading/LoadingHeader";
 import LoadingCard from "./loading/LoadingCard";
+import { generateQuiz } from "../services/generateQuiz";
 
-export default function LoadingScreen({ dispatch }) {
+export default function LoadingScreen({ dispatch, inputText }) {
   useEffect(() => {
-    setTimeout(() => {
-      console.log("timeout clicked");
-      dispatch({ type: "ready" });
-    }, 3000);
-  }, [dispatch]);
+    async function fetchQuiz() {
+      const quiz = await generateQuiz(inputText);
+
+      dispatch({ type: "ready", payload: quiz });
+    }
+
+    fetchQuiz();
+  }, [dispatch, inputText]);
 
   return (
     <div className="dark bg-background text-on-surface font-body min-h-screen flex flex-col overflow-hidden relative">

@@ -1,10 +1,22 @@
+import logo from "../../assets/logo.png";
+
 export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0e0e0f]/80 backdrop-blur-xl">
       <div className="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
-        <div className="text-2xl font-black text-white tracking-tighter font-headline">
-          Quizly
+        <div className="flex items-center gap-1.5">
+          <img
+            src={logo}
+            alt="Quizly logo"
+            className="h-9 w-9 object-contain"
+          />
+          <span className="text-2xl font-black text-white font-headline tracking-tight translate-y-0.5">
+            Quizly
+          </span>
         </div>
+        {/* <div className="text-2xl font-black text-white tracking-tighter font-headline">
+          Quizly
+        </div> */}
         <div className="hidden md:flex items-center gap-8">
           <a
             className="text-[#9fa7ff] font-bold font-['Inter'] text-sm hover:text-white transition-colors duration-300"

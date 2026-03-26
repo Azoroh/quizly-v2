@@ -134,6 +134,18 @@ export const mockQuiz = {
             ],
             correctOption: 3,
             points: 20
-        }
+        },
+        {
+            question: "What is the primary role of mitochondria in a eukaryotic cell?",
+            options: [
+                "To produce ATP via cellular respiration",
+                "To store genetic information",
+                "To synthesize proteins",
+                "To provide structural support",
+            ],
+            correctOption: 0,
+            explanation:
+                "Mitochondria generate ATP through cellular respiration.",
+        },
     ]
 };
