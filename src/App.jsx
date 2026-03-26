@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import { mockQuiz } from "./data/mockQuiz.js";
 import { getRandomItems } from "./utils/getRandomItems.js";
 import { useLocalStorage } from "./hooks/useLocalStorage.js";
-// import { generateQuiz } from "./services/generateQuiz.js";
 
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
@@ -11,7 +10,7 @@ import QuestionScreen from "./components/QuestionScreen";
 import ResultScreen from "./components/ResultScreen";
 
 const POINTS_PER_QUESTION = 10;
-const SECS_PER_QUESTION = 5;
+const SECS_PER_QUESTION = 10;
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
@@ -107,7 +106,8 @@ function reducer(state, action) {
     case "newQuiz":
       return {
         ...state,
-        status: "loading",
+        status: "landing",
+        inputText: state.inputText,
       };
 
     case "tickTock":

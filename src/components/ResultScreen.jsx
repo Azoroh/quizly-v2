@@ -41,7 +41,7 @@ export default function ResultScreen({
             <AIInsightPanel />
             <ResultActions
               onRestart={() => dispatch({ type: "restart" })}
-              onNewQuiz={dispatch({ type: "newQuiz" })}
+              onNewQuiz={() => dispatch({ type: "newQuiz" })}
             />
           </div>
         </div>
