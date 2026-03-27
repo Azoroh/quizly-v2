@@ -47,15 +47,15 @@ export default function QuestionScreen({
             {/* Question Text */}
             <div className="mb-12">
               <h1 className="text-2xl md:text-3xl font-headline font-bold leading-tight tracking-tight text-on-surface">
-                {curQuestion.question}
+                {curQuestion?.question}
               </h1>
             </div>
 
             <OptionsList
               answer={answer}
               dispatch={dispatch}
-              options={curQuestion.options}
-              correctOption={curQuestion.correctOption}
+              options={curQuestion?.options}
+              correctOption={curQuestion?.correctOption}
             />
 
             <QuestionFooter

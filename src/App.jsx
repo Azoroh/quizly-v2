@@ -1,10 +1,12 @@
 import { useReducer } from "react";
-import { mockQuiz } from "./data/mockQuiz.js";
+// import { mockQuiz } from "./data/mockQuiz.js";
 import { getRandomItems } from "./utils/getRandomItems.js";
 import { useLocalStorage } from "./hooks/useLocalStorage.js";
+// import { generateQuiz } from "./services/generateQuiz.js";
 
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
+import ErrorScreen from "./components/ErrorMessage.jsx";
 import StartScreen from "./components/StartScreen";
 import QuestionScreen from "./components/QuestionScreen";
 import ResultScreen from "./components/ResultScreen";
@@ -14,8 +16,8 @@ const SECS_PER_QUESTION = 10;
 
 // status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
-  totalQuestions: mockQuiz.questions,
-  // totalQuestions: generateQuiz("hey"),
+  // totalQuestions: mockQuiz.questions,
+  totalQuestions: [],
   questionCount: 5,
   status: "landing",
   index: null,
@@ -24,6 +26,7 @@ const initialState = {
   remainingSeconds: 0,
   quizSeconds: 0,
   inputText: "",
+  error: null,
 };
 
 function reducer(state, action) {
@@ -45,6 +48,7 @@ function reducer(state, action) {
         ...state,
         status: "ready",
         totalQuestions: action.payload,
+        total: getRandomItems(action.payload, state.questionCount),
       };
 
     case "selectQuestionCount": {
@@ -118,6 +122,13 @@ function reducer(state, action) {
         quizSeconds: state.quizSeconds + 1,
       };
 
+    case "error":
+      return {
+        ...state,
+        status: "error",
+        error: action.payload,
+      };
+
     default:
       throw new Error("Unknown Action");
   }
@@ -151,6 +162,7 @@ export default function App() {
       remainingSeconds,
       quizSeconds,
       inputText,
+      error,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
@@ -161,6 +173,8 @@ export default function App() {
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
 
+  console.log(questions);
+
   return (
     <div>
       {status === "landing" && (
@@ -168,6 +182,13 @@ export default function App() {
       )}
       {status === "loading" && (
         <LoadingScreen dispatch={dispatch} inputText={inputText} />
+      )}
+      {status === "error" && (
+        <ErrorScreen
+          onTryAgain={() => dispatch({ type: "generateQuiz" })}
+          onBackToHome={() => dispatch({ type: "newQuiz" })}
+          error={error}
+        />
       )}
 
       {status === "ready" && (
@@ -181,7 +202,7 @@ export default function App() {
       {status === "active" && (
         <QuestionScreen
           dispatch={dispatch}
-          curQuestion={questions[index]}
+          curQuestion={questions?.at(index)}
           answer={answer}
           questions={questions}
           index={index}
