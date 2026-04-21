@@ -17,8 +17,8 @@ export default function Hero({ dispatch, inputText }) {
         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-[2rem] blur-2xl opacity-50 group-hover:opacity-70 transition duration-1000"></div>
         <div className="relative glass-panel rounded-[2rem] p-4 md:p-6 border border-white/10 glow-border">
           <textarea
-            className="w-full min-h-[240px] bg-transparent border-none focus:ring-0 text-on-surface text-lg placeholder:text-on-surface-variant/50 resize-none font-medium"
-            placeholder="Paste your notes, textbook excerpt, or study material here to generate a quiz instantly..."
+            className="w-full min-h-[240px] bg-transparent border-none focus:ring-50 text-on-surface text-lg placeholder:text-on-surface-variant/50 resize-none font-small"
+            placeholder="Paste your notes or study material to generate a quiz instantly..."
             onChange={(e) =>
               dispatch({ type: "textInput", payload: e.target.value })
             }
