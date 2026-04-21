@@ -11,11 +11,9 @@
 }
 
 .atmospheric-bloom {
-  background: radial-gradient(
-    circle at center,
-    rgba(159, 167, 255, 0.08) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle at center,
+      rgba(159, 167, 255, 0.08) 0%,
+      transparent 70%);
 }
 
 .glass-panel {
@@ -44,11 +42,9 @@
 
 /* START SCREEN  */
 .glow-bg {
-  background: radial-gradient(
-    circle at center,
-    rgba(159, 167, 255, 0.08) 0%,
-    rgba(14, 14, 15, 0) 70%
-  );
+  background: radial-gradient(circle at center,
+      rgba(159, 167, 255, 0.08) 0%,
+      rgba(14, 14, 15, 0) 70%);
 }
 
 .segmented-control-active {
@@ -69,11 +65,9 @@
 }
 
 .bg-glow {
-  background: radial-gradient(
-    circle at center,
-    rgba(159, 167, 255, 0.08) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle at center,
+      rgba(159, 167, 255, 0.08) 0%,
+      transparent 70%);
 }
 
 /* ERROR SCREEN  */
