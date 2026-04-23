@@ -12,5 +12,4 @@ export async function generateQuiz(inputText, questionCount = 15) {
 
     const data = await res.json()
     return data.questions
-
 }

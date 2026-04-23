@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-// import { mockQuiz } from "./data/mockQuiz.js";
 import { getRandomItems } from "./utils/getRandomItems.js";
 import { useLocalStorage } from "./hooks/useLocalStorage.js";
 // import { generateQuiz } from "./services/generateQuiz.js";
@@ -12,14 +11,14 @@ import QuestionScreen from "./components/QuestionScreen";
 import ResultScreen from "./components/ResultScreen";
 
 const POINTS_PER_QUESTION = 10;
-const SECS_PER_QUESTION = 15;
+const SECS_PER_QUESTION = 2;
 
-// status = "landing" | "loading" | "ready" | "active" | "finished" | "error"
 const initialState = {
-  // totalQuestions: mockQuiz.questions,
   totalQuestions: [],
   questions: [],
   questionCount: 5,
+
+  // "landing" | "loading" | "ready" | "active" | "finished" | "error"
   status: "landing",
   index: null,
   answer: null,
@@ -30,7 +29,11 @@ const initialState = {
   error: null,
 
   reviewPayload: [],
-  aiSummaryStatus: null,
+
+  // "idle" | "loading" | "ready" | "error"
+  aiSummaryStatus: "idle",
+  aiSummary: "",
+  focusAreas: [],
 };
 
 function init(initial) {
@@ -75,6 +78,7 @@ function reducer(state, action) {
         questions: selectedQuestions,
         quizSeconds: 0,
         remainingSeconds: selectedQuestions.length * SECS_PER_QUESTION,
+        aiSummaryStatus: "idle",
       };
     }
 
@@ -155,6 +159,9 @@ function reducer(state, action) {
         status: "ready",
         quizSeconds: 0,
         reviewPayload: [],
+        aiSummaryStatus: "idle",
+        aiSummary: "",
+        focusAreas: [],
       };
 
     case "newQuiz":
@@ -163,6 +170,7 @@ function reducer(state, action) {
         status: "landing",
         inputText: state.inputText,
         reviewPayload: [],
+        //! LETS GET BACK TO THIS AFTER TESTING
       };
 
     case "tickTock": {
@@ -182,6 +190,33 @@ function reducer(state, action) {
         ...state,
         status: "error",
         error: action.payload,
+      };
+
+    case "loadSummary":
+      return {
+        ...state,
+        aiSummaryStatus: "loading",
+      };
+
+    case "readySummary":
+      return {
+        ...state,
+        aiSummaryStatus: "ready",
+        aiSummary: action.payload.summary,
+        focusAreas: action.payload.focusAreas,
+      };
+
+    case "idleSummary":
+      return {
+        ...state,
+        aiSummaryStatus: "idle",
+      };
+
+    case "errorSummary":
+      return {
+        ...state,
+        aiSummaryStatus: "error",
+        aiSummary: action.payload,
       };
 
     default:
@@ -204,6 +239,9 @@ export default function App() {
       inputText,
       error,
       reviewPayload,
+      aiSummaryStatus,
+      aiSummary,
+      focusAreas,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
@@ -215,6 +253,7 @@ export default function App() {
   const accuracyPercent = (points / maxPossiblePoints) * 100;
 
   console.log(reviewPayload);
+  console.log(aiSummaryStatus);
 
   return (
     <div>
@@ -260,6 +299,10 @@ export default function App() {
           correctAnswers={correctAnswers}
           accuracyPercent={accuracyPercent}
           quizSeconds={quizSeconds}
+          reviewPayload={reviewPayload}
+          aiSummaryStatus={aiSummaryStatus}
+          aiSummary={aiSummary}
+          focusAreas={focusAreas}
         />
       )}
     </div>
