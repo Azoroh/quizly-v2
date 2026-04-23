@@ -11,7 +11,7 @@ import QuestionScreen from "./components/QuestionScreen";
 import ResultScreen from "./components/ResultScreen";
 
 const POINTS_PER_QUESTION = 10;
-const SECS_PER_QUESTION = 2;
+const SECS_PER_QUESTION = 15;
 
 const initialState = {
   totalQuestions: [],
