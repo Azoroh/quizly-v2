@@ -34,6 +34,9 @@ const initialState = {
   aiSummaryStatus: "idle",
   aiSummary: "",
   focusAreas: [],
+
+  // TODO: upload feature
+  uploadedFiles: [],
 };
 
 function init(initial) {
@@ -219,6 +222,20 @@ function reducer(state, action) {
         aiSummary: action.payload,
       };
 
+    case "addFiles":
+      return {
+        ...state,
+        uploadedFiles: [...state.uploadedFiles, ...action.payload],
+      };
+
+    case "removeFiles":
+      return {
+        ...state,
+        uploadedFiles: state.uploadedFiles.filter(
+          (item) => item.id !== action.payload,
+        ),
+      };
+
     default:
       throw new Error("Unknown Action");
   }
@@ -242,6 +259,7 @@ export default function App() {
       aiSummaryStatus,
       aiSummary,
       focusAreas,
+      uploadedFiles,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
@@ -252,13 +270,17 @@ export default function App() {
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
 
-  console.log(reviewPayload);
-  console.log(aiSummaryStatus);
+  // console.log(reviewPayload);
+  // console.log(aiSummaryStatus);
 
   return (
     <div>
       {status === "landing" && (
-        <LandingScreen dispatch={dispatch} inputText={inputText} />
+        <LandingScreen
+          dispatch={dispatch}
+          inputText={inputText}
+          uploadedFiles={uploadedFiles}
+        />
       )}
       {status === "loading" && (
         <LoadingScreen dispatch={dispatch} inputText={inputText} />

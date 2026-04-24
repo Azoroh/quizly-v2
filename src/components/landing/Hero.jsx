@@ -1,8 +1,36 @@
-export default function Hero({ dispatch, inputText }) {
+import { useRef } from "react";
+
+export default function Hero({ dispatch, inputText, uploadedFiles }) {
+  const fileInputRef = useRef(null);
+
   const isDisabled = inputText.trim().length < 50;
+
+  function handleFileChange(e) {
+    const fileList = Array.from(e.target.files);
+
+    const newFiles = fileList.map((file) => ({
+      id: crypto.randomUUID(),
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      file,
+    }));
+
+    dispatch({ type: "addFiles", payload: newFiles });
+  }
 
   return (
     <div className="max-w-4xl mx-auto text-center">
+      {/* // ! Hidden Input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        className="hidden"
+        multiple
+        accept=".pdf" // Restrict file types
+      />
+
       <h1 className="font-headline text-5xl md:text-7xl font-black tracking-tight mb-8 leading-[1.1] text-white">
         Turn your study material into a{" "}
         <span className="animated-hero-gradient">personalized quiz</span>
@@ -26,7 +54,12 @@ export default function Hero({ dispatch, inputText }) {
             value={inputText}
           />
           <div className="flex flex-col md:flex-row justify-between items-center mt-6 pt-6 border-t border-white/5 gap-4">
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all duration-200 border border-white/5">
+            {/* //!Upload Button */}
+            <button
+              type="button"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all duration-200 border border-white/5"
+              onClick={() => fileInputRef.current.click()}
+            >
               <span className="material-symbols-outlined text-[20px]">
                 upload_file
               </span>
@@ -34,7 +67,50 @@ export default function Hero({ dispatch, inputText }) {
                 PDF, DOCX, Slides
               </span>
             </button>
+
+            {/* //! Display uploaded files */}
+            <div className="flex flex-wrap items-center gap-2 w-full justify-center">
+              {uploadedFiles &&
+                uploadedFiles.map((uploadedFile) => (
+                  <div
+                    key={uploadedFile.id}
+                    className="flex flex-1 items-center justify-center gap-2 min-w-36 max-w-[200px] px-3 py-2 rounded-xl bg-surface-container-high border border-white/5 text-on-surface"
+                  >
+                    <span className="text-sm font-medium truncate max-w-[180px] text-[#8c95f5]">
+                      {uploadedFile.name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        dispatch({
+                          type: "removeFiles",
+                          payload: uploadedFile.id,
+                        })
+                      }
+                      className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/5 hover:bg-red-500/20 text-on-surface-variant hover:text-red-400 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-x-icon lucide-x material-symbols-outlined text-[16px] p-[3px]"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+            </div>
+
             <button
+              type="button"
               disabled={isDisabled}
               className={`w-full md:w-auto px-8 py-3.5 rounded-full font-black text-base transition-all duration-300 ${
                 isDisabled
