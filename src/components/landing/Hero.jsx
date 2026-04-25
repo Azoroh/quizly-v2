@@ -1,24 +1,6 @@
 import { useRef } from "react";
 
-import { extractPdfText } from "../../services/extractPdfText";
-import { extractDocxText } from "../../services/extractDocxText";
-
-async function extractFileText(fileItem) {
-  const file = fileItem.file;
-
-  if (file.type === "application/pdf") {
-    return extractPdfText(file);
-  }
-
-  if (
-    file.type ===
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  ) {
-    return extractDocxText(file);
-  }
-
-  throw new Error(`Unsupported file type: ${file.type}`);
-}
+import { extractFileText } from "../../services/extractFileText";
 
 export default function Hero({ dispatch, inputText, uploadedFiles }) {
   const fileInputRef = useRef(null);

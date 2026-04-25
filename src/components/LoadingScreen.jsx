@@ -5,23 +5,23 @@ import { generateQuiz } from "../services/generateQuiz";
 import StartHeader from "./start/StartHeader";
 
 export default function LoadingScreen({ dispatch, inputText }) {
-  useEffect(() => {
-    async function fetchQuiz() {
-      try {
-        const quiz = await generateQuiz(inputText);
+  // useEffect(() => {
+  //   async function fetchQuiz() {
+  //     try {
+  //       const quiz = await generateQuiz(inputText);
 
-        dispatch({ type: "ready", payload: quiz });
-      } catch (err) {
-        console.error("Quiz generation failed:", err);
-        dispatch({
-          type: "error",
-          payload: err.message || "Failed to generate quiz",
-        });
-      }
-    }
+  //       dispatch({ type: "ready", payload: quiz });
+  //     } catch (err) {
+  //       console.error("Quiz generation failed:", err);
+  //       dispatch({
+  //         type: "error",
+  //         payload: err.message || "Failed to generate quiz",
+  //       });
+  //     }
+  //   }
 
-    fetchQuiz();
-  }, [dispatch, inputText]);
+  //   fetchQuiz();
+  // }, [dispatch, inputText]);
 
   return (
     <div className="dark bg-background text-on-surface font-body min-h-screen flex flex-col overflow-hidden relative">

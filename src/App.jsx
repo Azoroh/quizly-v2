@@ -19,7 +19,7 @@ const initialState = {
   questionCount: 5,
 
   // "landing" | "loading" | "ready" | "active" | "finished" | "error"
-  status: "landing",
+  status: "loading",
   index: null,
   answer: null,
   points: 0,
