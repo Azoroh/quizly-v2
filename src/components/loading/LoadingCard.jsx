@@ -2,7 +2,7 @@ import MetadataPills from "./MetadataPills";
 import SourceReceived from "./SourceReceived";
 import ProgressStages from "./ProgressStages";
 
-export default function LoadingCard() {
+export default function LoadingCard({ uploadedFiles }) {
   return (
     <div className="w-full max-w-2xl glass-card rounded-xl p-8 lg:p-12 glow-soft">
       {/* Heading */}
@@ -22,7 +22,7 @@ export default function LoadingCard() {
       </div>
 
       <MetadataPills />
-      <SourceReceived />
+      <SourceReceived uploadedFiles={uploadedFiles} />
       <ProgressStages />
     </div>
   );

@@ -5,50 +5,50 @@ import { generateQuiz } from "../services/generateQuiz";
 import { extractFileText } from "../services/extractFileText";
 
 export default function LoadingScreen({ dispatch, inputText, uploadedFiles }) {
-  useEffect(() => {
-    async function fetchQuiz() {
-      dispatch({ type: "extractingStage" });
+  // useEffect(() => {
+  //   async function fetchQuiz() {
+  //     dispatch({ type: "extractingStage" });
 
-      try {
-        let combinedText;
+  //     try {
+  //       let combinedText;
 
-        try {
-          const extractedTexts = await Promise.all(
-            uploadedFiles.map(extractFileText),
-          );
+  //       try {
+  //         const extractedTexts = await Promise.all(
+  //           uploadedFiles.map(extractFileText),
+  //         );
 
-          combinedText = [inputText, ...extractedTexts]
-            .filter(Boolean)
-            .join("\n\n");
-        } catch (error) {
-          console.error("File extraction failed:", error);
+  //         combinedText = [inputText, ...extractedTexts]
+  //           .filter(Boolean)
+  //           .join("\n\n");
+  //       } catch (error) {
+  //         console.error("File extraction failed:", error);
 
-          dispatch({
-            type: "error",
-            payload:
-              error.message || "Failed to extract text from uploaded file",
-          });
-          return;
-        }
+  //         dispatch({
+  //           type: "error",
+  //           payload:
+  //             error.message || "Failed to extract text from uploaded file",
+  //         });
+  //         return;
+  //       }
 
-        dispatch({ type: "analyzingStage" });
+  //       dispatch({ type: "analyzingStage" });
 
-        const quiz = await generateQuiz(combinedText);
+  //       const quiz = await generateQuiz(combinedText);
 
-        dispatch({ type: "finalizingStage" });
-        dispatch({ type: "readyStage" });
+  //       dispatch({ type: "finalizingStage" });
+  //       dispatch({ type: "readyStage" });
 
-        dispatch({ type: "ready", payload: quiz });
-      } catch (err) {
-        console.error("Quiz generation failed:", err);
-        dispatch({
-          type: "error",
-          payload: err.message || "Failed to generate quiz",
-        });
-      }
-    }
-    fetchQuiz();
-  }, [dispatch, inputText, uploadedFiles]);
+  //       dispatch({ type: "ready", payload: quiz });
+  //     } catch (err) {
+  //       console.error("Quiz generation failed:", err);
+  //       dispatch({
+  //         type: "error",
+  //         payload: err.message || "Failed to generate quiz",
+  //       });
+  //     }
+  //   }
+  //   fetchQuiz();
+  // }, [dispatch, inputText, uploadedFiles]);
 
   return (
     <div className="dark bg-background text-on-surface font-body min-h-screen flex flex-col overflow-hidden relative">
@@ -60,7 +60,7 @@ export default function LoadingScreen({ dispatch, inputText, uploadedFiles }) {
       <LoadingHeader />
 
       <main className="flex-grow flex items-center justify-center p-6 relative z-10">
-        <LoadingCard />
+        <LoadingCard uploadedFiles={uploadedFiles} />
       </main>
 
       <div className="h-32 w-full bg-gradient-to-t from-primary/5 to-transparent absolute bottom-0 left-0 pointer-events-none"></div>

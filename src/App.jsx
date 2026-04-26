@@ -19,7 +19,7 @@ const initialState = {
   questionCount: 5,
 
   // "landing" | "loading" | "ready" | "active" | "finished" | "error"
-  status: "landing",
+  status: "loading",
   index: null,
   answer: null,
   points: 0,
@@ -40,7 +40,26 @@ const initialState = {
   focusAreas: [],
 
   // TODO: upload feature
-  uploadedFiles: [],
+  uploadedFiles: [
+    {
+      id: "file-1",
+      name: "biology_lecture_notes.pdf",
+      size: 248320,
+      type: "application/pdf",
+      file: new File(["mock pdf content"], "biology_lecture_notes.pdf", {
+        type: "application/pdf",
+      }),
+    },
+    {
+      id: "file-2",
+      name: "cell_division_summary.docx",
+      size: 132544,
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      file: new File(["mock docx content"], "cell_division_summary.docx", {
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      }),
+    },
+  ],
 };
 
 function init(initial) {

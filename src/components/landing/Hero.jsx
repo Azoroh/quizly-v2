@@ -3,9 +3,8 @@ import { useRef } from "react";
 export default function Hero({ dispatch, inputText, uploadedFiles }) {
   const fileInputRef = useRef(null);
 
-  const isDisabled = inputText.trim().length < 50 || uploadedFiles.length < 1;
-  console.log(inputText.trim().length < 50 && uploadedFiles.length < 1);
-  console.log(inputText.trim().length);
+  const isDisabled =
+    inputText.trim().length < 50 - 1 && (uploadedFiles?.length ?? 0) < 1;
 
   function handleFileChange(e) {
     const fileList = Array.from(e.target.files);
