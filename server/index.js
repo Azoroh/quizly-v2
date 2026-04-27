@@ -113,13 +113,20 @@ app.post("/api/generate-quiz", async (req, res) => {
         console.error("Quizly Generation Error:", error);
 
         const status = error?.status || 500;
-        const providerMessage = error?.error?.message;
+        const providerMessage = error?.error?.message || error?.error?.message;
 
 
         if (status === 429) {
             return res.status(429).json({
                 error: providerMessage || "AI is temporarily rate limited. Please try again in a few seconds."
             })
+        }
+
+        if (status === 413) {
+            return res.status(413).json({
+                error:
+                    "Your uploaded material is too large to process at once. Try fewer files, shorter notes, or split the content into smaller parts.",
+            });
         }
 
         return res.status(status).json({ error: providerMessage || "Failed to generate quiz" });
