@@ -318,6 +318,7 @@ export default function App() {
           questionCount={questionCount}
           questions={questions}
           remainingSeconds={remainingSeconds}
+          uploadedFiles={uploadedFiles}
         />
       )}
       {status === "active" && (

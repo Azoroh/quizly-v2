@@ -9,6 +9,7 @@ export default function StartScreen({
   questionCount,
   questions,
   remainingSeconds,
+  uploadedFiles,
 }) {
   return (
     <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative">
@@ -25,13 +26,24 @@ export default function StartScreen({
         {/* Glass Card */}
         <div className="glass-card w-full rounded-[2rem] p-6 md:p-8 border border-white/5 shadow-2xl flex flex-col gap-8">
           {/* Source Chip */}
-          <div className="self-center inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/5 border border-secondary/10">
-            <span className="material-symbols-outlined text-secondary text-sm">
-              description
-            </span>
-            <span className="text-xs font-medium text-on-secondary-container/80">
-              biology_lecture_notes.pdf
-            </span>
+          <div className="flex justify-center gap-2">
+            {uploadedFiles.map((file) => (
+              <div
+                key={file.id}
+                className="self-center inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/5 border border-secondary/10 min-w-30 max-w-40"
+              >
+                <span
+                  className={`material-symbols-outlined text-sm ${file.name.endsWith(".pdf") ? "text-red-600" : "text-blue-600"}`}
+                >
+                  {file.name.endsWith(".pdf")
+                    ? "picture_as_pdf"
+                    : "description"}
+                </span>
+                <span className="text-xs font-medium text-on-secondary-container/80 truncate">
+                  {file.name}
+                </span>
+              </div>
+            ))}
           </div>
 
           <SummaryStats
