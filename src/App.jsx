@@ -19,14 +19,13 @@ const initialState = {
   questionCount: 5,
 
   // "landing" | "loading" | "ready" | "active" | "finished" | "error"
-  status: "loading",
+  status: "landing",
   index: null,
   answer: null,
   points: 0,
   remainingSeconds: 0,
   quizSeconds: 0,
   inputText: "",
-  quizSourceText: "",
 
   error: null,
 
@@ -40,26 +39,7 @@ const initialState = {
   focusAreas: [],
 
   // TODO: upload feature
-  uploadedFiles: [
-    {
-      id: "file-1",
-      name: "biology_lecture_notes.pdf",
-      size: 248320,
-      type: "application/pdf",
-      file: new File(["mock pdf content"], "biology_lecture_notes.pdf", {
-        type: "application/pdf",
-      }),
-    },
-    {
-      id: "file-2",
-      name: "cell_division_summary.docx",
-      size: 132544,
-      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      file: new File(["mock docx content"], "cell_division_summary.docx", {
-        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      }),
-    },
-  ],
+  uploadedFiles: [],
 };
 
 function init(initial) {
@@ -83,12 +63,6 @@ function reducer(state, action) {
       return {
         ...state,
         inputText: action.payload,
-      };
-
-    case "prepareQuizText":
-      return {
-        ...state,
-        quizSourceText: action.payload,
       };
 
     case "generateQuiz":
@@ -301,7 +275,6 @@ export default function App() {
       aiSummary,
       focusAreas,
       uploadedFiles,
-      quizSourceText,
       loadingStage,
     },
     dispatch,
@@ -312,8 +285,6 @@ export default function App() {
   const maxPossiblePoints = questions.length * POINTS_PER_QUESTION;
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
-
-  console.log(loadingStage);
 
   return (
     <div>
@@ -327,8 +298,10 @@ export default function App() {
       {status === "loading" && (
         <LoadingScreen
           dispatch={dispatch}
-          quizSourceText={quizSourceText}
           uploadedFiles={uploadedFiles}
+          loadingStage={loadingStage}
+          questionCount={questionCount}
+          inputText={inputText}
         />
       )}
       {status === "error" && (
