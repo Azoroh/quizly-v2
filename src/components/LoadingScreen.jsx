@@ -3,6 +3,7 @@ import LoadingHeader from "./loading/LoadingHeader";
 import LoadingCard from "./loading/LoadingCard";
 import { extractFileText } from "../services/extractFileText";
 import { generateQuiz } from "../services/generateQuiz";
+import { buildCappedStudyMaterial } from "../utils/buildCappedStudyMaterial";
 
 export default function LoadingScreen({
   dispatch,
@@ -20,16 +21,26 @@ export default function LoadingScreen({
       dispatch({ type: "extractingStage" });
 
       try {
-        let combinedText;
+        let safeText;
 
         try {
-          const extractedTexts = await Promise.all(
-            uploadedFiles.map(extractFileText),
+          const extractedFiles = await Promise.all(
+            uploadedFiles.map(async (uploadedFile) => ({
+              id: uploadedFile.id,
+              name: uploadedFile.name,
+              text: await extractFileText(uploadedFile),
+            })),
           );
 
-          combinedText = [inputText, ...extractedTexts]
-            .filter(Boolean)
-            .join("\n\n");
+          const cappedMaterial = buildCappedStudyMaterial({
+            inputText,
+            extractedFiles,
+            maxChars: MAX_INPUT_CHARS,
+          });
+
+          safeText = cappedMaterial.combinedText;
+
+          console.log(cappedMaterial);
         } catch (error) {
           if (cancelled) return;
           console.error("File extraction failed:", error);
@@ -44,9 +55,6 @@ export default function LoadingScreen({
 
         if (cancelled) return;
         dispatch({ type: "analyzingStage" });
-
-        //truncate combinedText
-        const safeText = (combinedText || "").slice(0, MAX_INPUT_CHARS);
 
         if (!safeText.trim()) {
           dispatch({
