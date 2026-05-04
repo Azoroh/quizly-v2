@@ -52,7 +52,7 @@ export default function OptionsList({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 mb-12">
+    <div className="grid grid-cols-1 gap-3 sm:gap-4 mb-8 sm:mb-12">
       {options?.map((option, i) => {
         const styles = getStyles(i);
         return (
@@ -62,15 +62,15 @@ export default function OptionsList({
               !hasSelected && dispatch({ type: "selectAnswer", payload: i });
             }}
             disabled={hasSelected}
-            className={`group flex items-center text-left p-6 rounded-2xl transition-all duration-300 border ${styles.button}`}
+            className={`group flex items-center text-left p-4 sm:p-6 rounded-2xl transition-all duration-300 border ${styles.button}`}
           >
             <div
-              className={`flex items-center justify-center w-12 h-12 rounded-xl font-headline font-bold text-lg mr-6 transition-colors flex-shrink-0 ${styles.badge}`}
+              className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl font-headline font-bold text-base sm:text-lg mr-4 sm:mr-6 transition-colors flex-shrink-0 ${styles.badge}`}
             >
               {letters[i]}
             </div>
             <span
-              className={`text-lg font-body font-medium transition-colors flex-1 ${styles.text}`}
+              className={`text-base sm:text-lg font-body font-medium transition-colors flex-1 ${styles.text}`}
             >
               {option}
             </span>

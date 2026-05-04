@@ -61,9 +61,9 @@ export default function ResultScreen({
       {/*  <ResultHeader /> */}
       <StartHeader />
 
-      <main className="flex-grow flex items-center justify-center px-6 py-24">
+      <main className="flex-grow flex items-start sm:items-center justify-center px-4 sm:px-6 pt-20 sm:pt-24 pb-10">
         <div className="w-full max-w-3xl">
-          <div className="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center shadow-[0_40px_100px_rgba(0,0,0,0.6)]">
+          <div className="glass-card rounded-[1.75rem] sm:rounded-2xl p-4 sm:p-8 md:p-12 flex flex-col items-center shadow-[0_40px_100px_rgba(0,0,0,0.6)]">
             <ScoreDisplay
               points={points}
               maxPossiblePoints={maxPossiblePoints}

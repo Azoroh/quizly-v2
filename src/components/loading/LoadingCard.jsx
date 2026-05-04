@@ -23,17 +23,17 @@ export default function LoadingCard({
     "Quizly is preparing your material and building your personalized quiz.";
 
   return (
-    <div className="w-full max-w-2xl glass-card rounded-xl p-8 lg:p-12 glow-soft">
-      <div className="text-center mb-10">
-        <h1 className="font-headline font-bold text-3xl md:text-4xl text-on-surface tracking-tight mb-4">
+    <div className="w-full max-w-2xl glass-card rounded-[1.5rem] sm:rounded-xl p-5 sm:p-8 lg:p-12 glow-soft">
+      <div className="text-center mb-8 sm:mb-10">
+        <h1 className="font-headline font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface tracking-tight mb-3 sm:mb-4">
           Building your personalized quiz
         </h1>
-        <p className="font-body text-on-surface-variant text-lg max-w-lg mx-auto leading-relaxed">
+        <p className="font-body text-on-surface-variant text-sm sm:text-base md:text-lg max-w-lg mx-auto leading-relaxed">
           {subtitle}
         </p>
       </div>
 
-      <div className="relative w-full h-1.5 bg-surface-container-highest rounded-full mb-12 overflow-hidden">
+      <div className="relative w-full h-1.5 bg-surface-container-highest rounded-full mb-8 sm:mb-12 overflow-hidden">
         <div
           style={{ width: `${getLoadingStageVal(loadingStage)}%` }}
           className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary-dim to-primary rounded-full progress-glow transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"

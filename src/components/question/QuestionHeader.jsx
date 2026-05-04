@@ -10,9 +10,9 @@ export default function QuestionHeader({
   // const progress = Math.round((current / total) * 100);
 
   return (
-    <div className="flex flex-col gap-6 mb-10">
-      <div className="flex justify-between items-center">
-        <h2 className="text-on-surface font-headline font-bold text-xl">
+    <div className="flex flex-col gap-5 sm:gap-6 mb-8 sm:mb-10">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h2 className="text-on-surface font-headline font-bold text-lg sm:text-xl">
           Question {current} of {total}
         </h2>
 

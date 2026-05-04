@@ -113,7 +113,7 @@ export default function LoadingScreen({
 
       <LoadingHeader />
 
-      <main className="flex-grow flex items-center justify-center p-6 relative z-10">
+      <main className="flex-grow flex items-start sm:items-center justify-center px-4 sm:px-6 pt-24 sm:pt-28 pb-10 relative z-10">
         <LoadingCard
           uploadedFiles={uploadedFiles}
           loadingStage={loadingStage}

@@ -20,20 +20,20 @@ export default function SummaryStats({
   ];
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
       {stats.map(({ icon, color, label, value }) => (
         <div
           key={label}
-          className="bg-surface-container-low/40 px-5 py-4 rounded-xl flex items-center gap-4 premium-border"
+          className="bg-surface-container-low/40 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl flex items-center gap-3 sm:gap-4 premium-border"
         >
-          <span className={`material-symbols-outlined ${color} text-2xl`}>
+          <span className={`material-symbols-outlined ${color} text-xl sm:text-2xl`}>
             {icon}
           </span>
           <div>
             <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5">
               {label}
             </p>
-            <p className="text-base font-bold text-on-surface">{value}</p>
+            <p className="text-sm sm:text-base font-bold text-on-surface">{value}</p>
           </div>
         </div>
       ))}
