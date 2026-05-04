@@ -4,15 +4,42 @@ import SummaryStats from "./start/SummaryStats";
 import QuestionSelector from "./start/QuestionSelector";
 import StartButton from "./start/StartButton";
 import { getSourceStatus } from "../utils/getSourceStatus";
+import { buildExcludedSourcesMessage } from "../utils/buildExcludedSourcesMessage";
+import { useEffect, useMemo, useState } from "react";
 
 export default function StartScreen({
   dispatch,
   questionCount,
   questions,
   remainingSeconds,
-  sourceUsage,
+  sourceUsage = [],
 }) {
-  const excludedSources = sourceUsage.filter((source) => !source.wasIncluded);
+  const excludedSources = useMemo(
+    () => sourceUsage.filter((source) => !source.wasIncluded),
+    [sourceUsage],
+  );
+
+  const toastMessage = useMemo(
+    () => buildExcludedSourcesMessage(excludedSources),
+    [excludedSources],
+  );
+
+  const hasExcludedSources = excludedSources.length > 0;
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (!hasExcludedSources) return;
+
+    setShowToast(true);
+
+    const timeOutId = setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
+
+    return () => clearTimeout(timeOutId);
+  }, [hasExcludedSources]);
+
+  console.log(toastMessage);
 
   return (
     <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative">
@@ -24,6 +51,14 @@ export default function StartScreen({
       <StartHeader />
 
       <main className="relative z-10 w-full max-w-2xl px-6 py-12 flex flex-col items-center text-center">
+        {showToast && toastMessage ? (
+          <ToastMessage className="fixed top-24 left-1/2 -translate-x-1/2 z-50 w-[min(92vw,680px)] rounded-2xl border border-amber-300/20 bg-amber-500/10 backdrop-blur-xl px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+            <p className="text-sm md:text-[15px] text-amber-100 font-medium leading-relaxed">
+              {toastMessage}
+            </p>
+          </ToastMessage>
+        ) : null}
+
         <StartHero />
 
         {/* Glass Card */}
@@ -100,4 +135,8 @@ export default function StartScreen({
       </div>
     </div>
   );
+}
+
+function ToastMessage({ children, className }) {
+  return <div className={className}>{children}</div>;
 }
