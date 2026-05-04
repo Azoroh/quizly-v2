@@ -23,8 +23,8 @@ export default function LoadingCard({
     "Quizly is preparing your material and building your personalized quiz.";
 
   return (
-    <div className="w-full max-w-2xl glass-card rounded-[1.5rem] sm:rounded-xl p-5 sm:p-8 lg:p-12 glow-soft">
-      <div className="text-center mb-8 sm:mb-10">
+    <div className="w-full max-w-2xl glass-card rounded-[1.5rem] sm:rounded-xl p-4 sm:p-8 lg:p-12 glow-soft">
+      <div className="text-center mb-6 sm:mb-10">
         <h1 className="font-headline font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface tracking-tight mb-3 sm:mb-4">
           Building your personalized quiz
         </h1>

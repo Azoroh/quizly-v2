@@ -2,24 +2,24 @@ export default function SourceReceived({ uploadedFiles, loadingStage }) {
   const isLoading = loadingStage !== "finalizing" && loadingStage !== "ready";
 
   return (
-    <div className="bg-surface-container-low rounded-lg p-5 mb-10 flex flex-col gap-3">
+    <div className="bg-surface-container-low rounded-lg p-4 sm:p-5 mb-6 sm:mb-10 flex flex-col gap-3">
       <span className="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase opacity-70">
         SOURCE RECEIVED
       </span>
 
-      <div className="flex gap-2 justify-center flex-wrap w-full">
+      <div className="grid grid-cols-2 gap-2 w-full">
         {uploadedFiles &&
           uploadedFiles.map((file) => (
             <div
               key={file.id}
-              className="flex flex-1 items-center gap-2 bg-surface-container-high px-4 py-2.5 rounded-lg border border-outline-variant/20 w-full min-w-34 max-w-[200px]"
+              className="flex min-w-0 items-center gap-2 bg-surface-container-high px-3 sm:px-4 py-2 rounded-lg border border-outline-variant/20 w-full"
             >
               <span
                 className={`material-symbols-outlined ${file.name.endsWith(".pdf") ? "text-red-600" : "text-blue-600"} textre`}
               >
                 {file.name.endsWith(".pdf") ? "picture_as_pdf" : "description"}
               </span>
-              <span className="text-on-surface-variant/100 font-label text-sm truncate">
+              <span className="text-on-surface-variant/100 font-label text-xs sm:text-sm truncate">
                 {file.name}
               </span>
               {isLoading ? (

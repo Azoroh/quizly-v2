@@ -26,19 +26,19 @@ const stats = [
 
 export default function SummaryStats({ questionCount, remainingSeconds }) {
   return (
-    <div className="grid grid-cols-3 gap-3 md:gap-4">
+    <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
       {stats.map(({ icon, label, value, color, hover }) => (
         <div
           key={label}
-          className={`flex flex-col items-center gap-1.5 p-4 rounded-2xl bg-white/[0.03] border border-white/5 ${hover} transition-colors`}
+          className={`flex flex-col items-center gap-1 p-2.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/5 ${hover} transition-colors`}
         >
-          <span className={`material-symbols-outlined ${color} opacity-80`}>
+          <span className={`material-symbols-outlined ${color} opacity-80 text-lg sm:text-2xl`}>
             {icon}
           </span>
           <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/70">
             {label}
           </span>
-          <span className="text-base font-bold text-on-surface">
+          <span className="text-xs sm:text-base font-bold text-on-surface">
             {label !== "questions" && label !== "time" && value}
             {label === "questions" && `${questionCount} Total`}
             {label === "time" &&

@@ -33,7 +33,7 @@ export default function QuestionScreen({
         </div>
       </nav> */}
 
-      <main className="flex-grow flex items-start sm:items-center justify-center px-4 sm:px-6 pt-20 sm:pt-24 pb-8 sm:pb-12">
+      <main className="flex-grow flex items-start sm:items-center justify-center px-3 sm:px-6 pt-18 sm:pt-24 pb-6 sm:pb-12">
         <div className="w-full max-w-3xl">
           <QuestionCard answer={answer}>
             <QuestionHeader
@@ -45,8 +45,8 @@ export default function QuestionScreen({
             />
 
             {/* Question Text */}
-            <div className="mb-12">
-              <h1 className="text-2xl md:text-3xl font-headline font-bold leading-tight tracking-tight text-on-surface">
+            <div className="mb-6 sm:mb-12">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-headline font-bold leading-tight tracking-tight text-on-surface">
                 {curQuestion?.question}
               </h1>
             </div>

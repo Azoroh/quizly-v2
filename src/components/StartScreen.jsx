@@ -84,9 +84,9 @@ export default function StartScreen({
         <StartHero />
 
         {/* Glass Card */}
-        <div className="glass-card w-full rounded-[1.75rem] sm:rounded-[2rem] p-4 sm:p-6 md:p-8 border border-white/5 shadow-2xl flex flex-col gap-6 sm:gap-8">
+        <div className="glass-card w-full rounded-[1.75rem] sm:rounded-[2rem] p-4 sm:p-6 md:p-8 border border-white/5 shadow-2xl flex flex-col gap-4 sm:gap-8">
           {/* Source Chip */}
-          <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2 sm:gap-3 md:gap-4 justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2 sm:gap-3 md:gap-4 justify-center">
             {sourceUsage.map((source) => {
               const status = getSourceStatus(source);
               const toneClasses =

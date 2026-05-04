@@ -70,12 +70,12 @@ export default function Hero({ dispatch, inputText, uploadedFiles }) {
                   </span>
                 </button>
 
-                <div className="flex flex-wrap items-center gap-2 justify-center lg:justify-start">
+                <div className="grid w-full grid-cols-2 gap-2 lg:flex lg:flex-wrap lg:items-center lg:justify-start">
                   {uploadedFiles &&
                     uploadedFiles.map((uploadedFile) => (
                       <div
                         key={uploadedFile.id}
-                        className="inline-flex max-w-full items-center gap-2 px-3 py-2 rounded-xl bg-surface-container-high border border-white/5 text-on-surface"
+                        className="inline-flex min-w-0 w-full items-center gap-2 px-3 py-2 rounded-xl bg-surface-container-high border border-white/5 text-on-surface lg:w-auto"
                       >
                         <span className="text-sm font-medium truncate max-w-[160px] sm:max-w-[180px] text-[#8c95f5]">
                           {uploadedFile.name}

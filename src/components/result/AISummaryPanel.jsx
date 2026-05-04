@@ -13,7 +13,7 @@ export default function AISummaryPanel({
   const isReadyorError = isReady || isError;
 
   return (
-    <div className="w-full bg-surface-container-low/30 rounded-2xl p-6 md:p-8 mb-10 border border-primary/10 relative overflow-hidden">
+    <div className="w-full bg-surface-container-low/30 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-10 border border-primary/10 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary/40 to-transparent"></div>
 
       <div
