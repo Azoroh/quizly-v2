@@ -40,7 +40,7 @@ export default function LoadingScreen({
 
           safeText = cappedMaterial.combinedText;
 
-          console.log(cappedMaterial);
+          // console.log(cappedMaterial);
         } catch (error) {
           if (cancelled) return;
           console.error("File extraction failed:", error);
