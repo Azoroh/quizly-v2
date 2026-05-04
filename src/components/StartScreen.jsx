@@ -24,20 +24,33 @@ export default function StartScreen({
     [excludedSources],
   );
 
-  const hasExcludedSources = excludedSources.length > 0;
+  // const hasExcludedSources = excludedSources.length > 0;
   const [showToast, setShowToast] = useState(false);
+  const [shouldRenderToast, setShouldRenderToast] = useState(false);
 
   useEffect(() => {
-    if (!hasExcludedSources) return;
+    if (!toastMessage) return;
 
-    setShowToast(true);
+    let enterTimeoutId;
+    let hideTimeoutId;
 
-    const timeOutId = setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
+    setShouldRenderToast(true);
 
-    return () => clearTimeout(timeOutId);
-  }, [hasExcludedSources]);
+    enterTimeoutId = setTimeout(() => setShowToast(true), 500);
+
+    hideTimeoutId = setTimeout(() => setShowToast(false), 4000);
+
+    return () => {
+      clearTimeout(enterTimeoutId);
+      clearTimeout(hideTimeoutId);
+    };
+  }, [toastMessage]);
+
+  function handleToastTransitionEnd() {
+    if (!showToast) {
+      setShouldRenderToast(false);
+    }
+  }
 
   console.log(toastMessage);
 
@@ -51,8 +64,15 @@ export default function StartScreen({
       <StartHeader />
 
       <main className="relative z-10 w-full max-w-2xl px-6 py-12 flex flex-col items-center text-center">
-        {showToast && toastMessage ? (
-          <ToastMessage className="fixed top-24 left-1/2 -translate-x-1/2 z-50 w-[min(92vw,680px)] rounded-2xl border border-amber-300/20 bg-amber-500/10 backdrop-blur-xl px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+        {shouldRenderToast && toastMessage ? (
+          <ToastMessage
+            onTransitionEnd={handleToastTransitionEnd}
+            className={`fixed top-24 left-1/2 -translate-x-1/2 z-50 w-[min(92vw,680px)] rounded-2xl border border-amber-300/20 bg-amber-500/10 backdrop-blur-xl px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out ${
+              showToast
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-6 opacity-0 pointer-events-none"
+            }`}
+          >
             <p className="text-sm md:text-[15px] text-amber-100 font-medium leading-relaxed">
               {toastMessage}
             </p>
@@ -137,6 +157,10 @@ export default function StartScreen({
   );
 }
 
-function ToastMessage({ children, className }) {
-  return <div className={className}>{children}</div>;
+function ToastMessage({ children, className, onTransitionEnd }) {
+  return (
+    <div className={className} onTransitionEnd={onTransitionEnd}>
+      {children}
+    </div>
+  );
 }
