@@ -40,6 +40,7 @@ const initialState = {
 
   // TODO: upload feature
   uploadedFiles: [],
+  cappedMaterialSources: [],
 };
 
 function init(initial) {
@@ -176,6 +177,7 @@ function reducer(state, action) {
         status: "landing",
         inputText: state.inputText,
         reviewPayload: [],
+        cappedMaterialSources: [],
         //! LETS GET BACK TO THIS AFTER TESTING
       };
 
@@ -251,6 +253,14 @@ function reducer(state, action) {
     case "readyStage":
       return { ...state, loadingStage: "ready" };
 
+    case "includeCappedSources": {
+      const includedSources = action.payload.filter(
+        (source) => source.wasIncluded,
+      );
+
+      return { ...state, cappedMaterialSources: includedSources };
+    }
+
     default:
       throw new Error("Unknown Action");
   }
@@ -276,6 +286,7 @@ export default function App() {
       focusAreas,
       uploadedFiles,
       loadingStage,
+      cappedMaterialSources,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
@@ -285,6 +296,8 @@ export default function App() {
   const maxPossiblePoints = questions.length * POINTS_PER_QUESTION;
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
+
+  console.log(cappedMaterialSources);
 
   return (
     <div>
@@ -318,7 +331,7 @@ export default function App() {
           questionCount={questionCount}
           questions={questions}
           remainingSeconds={remainingSeconds}
-          uploadedFiles={uploadedFiles}
+          cappedMaterialSources={cappedMaterialSources}
         />
       )}
       {status === "active" && (
