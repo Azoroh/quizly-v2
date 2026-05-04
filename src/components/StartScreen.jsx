@@ -9,7 +9,7 @@ export default function StartScreen({
   questionCount,
   questions,
   remainingSeconds,
-  cappedMaterialSources,
+  sourceUsage,
 }) {
   return (
     <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative">
@@ -27,7 +27,7 @@ export default function StartScreen({
         <div className="glass-card w-full rounded-[2rem] p-6 md:p-8 border border-white/5 shadow-2xl flex flex-col gap-8">
           {/* Source Chip */}
           <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,160px))] gap-3 md:gap-4 justify-center">
-            {cappedMaterialSources.map((file) => (
+            {sourceUsage.map((file) => (
               <div
                 key={file.id}
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/5 border border-secondary/10 w-full"

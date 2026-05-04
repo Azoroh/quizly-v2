@@ -41,7 +41,7 @@ export default function LoadingScreen({
           safeText = cappedMaterial.combinedText;
 
           dispatch({
-            type: "includeCappedSources",
+            type: "sourceUsage",
             payload: cappedMaterial.sources,
           });
 
