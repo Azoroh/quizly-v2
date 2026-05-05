@@ -65,12 +65,12 @@ export default function OptionsList({
             className={`group flex items-center text-left p-4 sm:p-6 rounded-2xl transition-all duration-300 border ${styles.button}`}
           >
             <div
-              className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl font-headline font-bold text-base sm:text-lg mr-4 sm:mr-6 transition-colors flex-shrink-0 ${styles.badge}`}
+              className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl font-headline font-bold text-sm sm:text-base mr-3 sm:mr-4 transition-colors flex-shrink-0 ${styles.badge}`}
             >
               {letters[i]}
             </div>
             <span
-              className={`text-base sm:text-lg font-body font-medium transition-colors flex-1 ${styles.text}`}
+              className={`text-sm sm:text-base font-body font-medium transition-colors flex-1 ${styles.text}`}
             >
               {option}
             </span>

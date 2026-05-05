@@ -41,6 +41,7 @@ const initialState = {
   // TODO: upload feature
   uploadedFiles: [],
   sourceUsage: [],
+  hasShownSourceToast: false,
 };
 
 function init(initial) {
@@ -178,6 +179,7 @@ function reducer(state, action) {
         inputText: state.inputText,
         reviewPayload: [],
         sourceUsage: [],
+        hasShownSourceToast: false,
         //! LETS GET BACK TO THIS AFTER TESTING
       };
 
@@ -254,7 +256,14 @@ function reducer(state, action) {
       return { ...state, loadingStage: "ready" };
 
     case "sourceUsage":
-      return { ...state, sourceUsage: action.payload };
+      return {
+        ...state,
+        sourceUsage: action.payload,
+        hasShownSourceToast: false,
+      };
+
+    case "shownSourceToast":
+      return { ...state, hasShownSourceToast: true };
 
     default:
       throw new Error("Unknown Action");
@@ -282,6 +291,7 @@ export default function App() {
       uploadedFiles,
       loadingStage,
       sourceUsage,
+      hasShownSourceToast,
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
@@ -291,8 +301,6 @@ export default function App() {
   const maxPossiblePoints = questions.length * POINTS_PER_QUESTION;
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
-
-  console.log(sourceUsage);
 
   return (
     <div>
@@ -329,6 +337,7 @@ export default function App() {
           questions={questions}
           remainingSeconds={remainingSeconds}
           sourceUsage={sourceUsage}
+          hasShownSourceToast={hasShownSourceToast}
         />
       )}
 

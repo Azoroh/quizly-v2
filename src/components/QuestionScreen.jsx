@@ -26,12 +26,7 @@ export default function QuestionScreen({
       <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       {/* Nav */}
-      <StartHeader />
-      {/* <nav className="flex justify-center items-center w-full px-6 py-8 fixed top-0 z-50">
-        <div className="text-2xl font-black text-primary tracking-tight font-headline">
-          Quizly
-        </div>
-      </nav> */}
+      {/* <StartHeader /> */}
 
       <main className="flex-grow flex items-start sm:items-center justify-center px-3 sm:px-6 pt-18 sm:pt-24 pb-6 sm:pb-12">
         <div className="w-full max-w-3xl">

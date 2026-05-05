@@ -100,14 +100,14 @@ export default function AISummaryPanel({
         ) : null}
 
         {isReady && isTypingDone ? (
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[9px] sm:text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">
               Focus areas:
             </span>
             {focusAreas?.map((area) => (
               <div
                 key={area}
-                className="bg-surface-container-highest/40 text-on-surface-variant text-[11px] font-semibold px-3 py-1 rounded-full border border-outline-variant/10"
+                className="bg-surface-container-highest/40 text-on-surface-variant text-[10px] sm:text-[11px] font-semibold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-outline-variant/10"
               >
                 {area}
               </div>

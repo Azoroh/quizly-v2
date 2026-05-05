@@ -13,6 +13,7 @@ export default function StartScreen({
   questions,
   remainingSeconds,
   sourceUsage = [],
+  hasShownSourceToast,
 }) {
   const excludedSources = useMemo(
     () => sourceUsage.filter((source) => !source.wasIncluded),
@@ -29,7 +30,7 @@ export default function StartScreen({
   const [shouldRenderToast, setShouldRenderToast] = useState(false);
 
   useEffect(() => {
-    if (!toastMessage) return;
+    if (!toastMessage || hasShownSourceToast) return;
 
     let renderTimeoutId;
     let enterTimeoutId;
@@ -37,7 +38,11 @@ export default function StartScreen({
 
     renderTimeoutId = setTimeout(() => setShouldRenderToast(true), 0);
 
-    enterTimeoutId = setTimeout(() => setShowToast(true), 500);
+    enterTimeoutId = setTimeout(() => {
+      setShowToast(true);
+
+      dispatch({ type: "shownSourceToast" });
+    }, 500);
 
     hideTimeoutId = setTimeout(() => setShowToast(false), 4000);
 
@@ -46,15 +51,13 @@ export default function StartScreen({
       clearTimeout(enterTimeoutId);
       clearTimeout(hideTimeoutId);
     };
-  }, [toastMessage]);
+  }, [toastMessage, dispatch]);
 
   function handleToastTransitionEnd() {
     if (!showToast) {
       setShouldRenderToast(false);
     }
   }
-
-  console.log(toastMessage);
 
   return (
     <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-start overflow-x-hidden relative">
@@ -117,7 +120,6 @@ export default function StartScreen({
               return (
                 <div
                   key={source.id}
-                  // className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/5 border border-secondary/10 w-full"
                   className={`inline-flex items-center gap-2 px-3 py-2 rounded-2xl w-full transition-colors ${toneClasses}`}
                 >
                   <span
