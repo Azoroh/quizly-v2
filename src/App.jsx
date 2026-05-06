@@ -1,7 +1,6 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { getRandomItems } from "./utils/getRandomItems.js";
 import { useLocalStorage } from "./hooks/useLocalStorage.js";
-// import { generateQuiz } from "./services/generateQuiz.js";
 
 import LandingScreen from "./components/LandingScreen";
 import LoadingScreen from "./components/LoadingScreen";
@@ -295,6 +294,8 @@ export default function App() {
     },
     dispatch,
   ] = useReducer(reducer, initialState, init);
+  const [renderedStatus, setRenderedStatus] = useState(status);
+  const [isScreenVisible, setIsScreenVisible] = useState(true);
 
   useLocalStorage("highscore", highScore);
 
@@ -302,17 +303,41 @@ export default function App() {
   const correctAnswers = points / POINTS_PER_QUESTION;
   const accuracyPercent = (points / maxPossiblePoints) * 100;
 
-  return (
-    <div>
-      {status === "landing" && (
+  useEffect(() => {
+    if (status === renderedStatus) {
+      setIsScreenVisible(true);
+      return;
+    }
+
+    setIsScreenVisible(false);
+
+    const swapTimerId = setTimeout(() => {
+      setRenderedStatus(status);
+    }, 180);
+
+    const enterTimerId = setTimeout(() => {
+      setIsScreenVisible(true);
+    }, 220);
+
+    return () => {
+      clearTimeout(swapTimerId);
+      clearTimeout(enterTimerId);
+    };
+  }, [status]);
+
+  function renderScreen(activeStatus) {
+    if (activeStatus === "landing") {
+      return (
         <LandingScreen
           dispatch={dispatch}
           inputText={inputText}
           uploadedFiles={uploadedFiles}
         />
-      )}
+      );
+    }
 
-      {status === "loading" && (
+    if (activeStatus === "loading") {
+      return (
         <LoadingScreen
           dispatch={dispatch}
           uploadedFiles={uploadedFiles}
@@ -320,17 +345,21 @@ export default function App() {
           questionCount={questionCount}
           inputText={inputText}
         />
-      )}
+      );
+    }
 
-      {status === "error" && (
+    if (activeStatus === "error") {
+      return (
         <ErrorScreen
           onTryAgain={() => dispatch({ type: "generateQuiz" })}
           onBackToHome={() => dispatch({ type: "newQuiz" })}
           error={error}
         />
-      )}
+      );
+    }
 
-      {status === "ready" && (
+    if (activeStatus === "ready") {
+      return (
         <StartScreen
           dispatch={dispatch}
           questionCount={questionCount}
@@ -339,9 +368,11 @@ export default function App() {
           sourceUsage={sourceUsage}
           hasShownSourceToast={hasShownSourceToast}
         />
-      )}
+      );
+    }
 
-      {status === "active" && (
+    if (activeStatus === "active") {
+      return (
         <QuestionScreen
           dispatch={dispatch}
           curQuestion={questions?.at(index)}
@@ -350,9 +381,11 @@ export default function App() {
           index={index}
           remainingSeconds={remainingSeconds}
         />
-      )}
+      );
+    }
 
-      {status === "finished" && (
+    if (activeStatus === "finished") {
+      return (
         <ResultScreen
           dispatch={dispatch}
           points={points}
@@ -366,7 +399,21 @@ export default function App() {
           aiSummary={aiSummary}
           focusAreas={focusAreas}
         />
-      )}
+      );
+    }
+
+    return null;
+  }
+
+  return (
+    <div
+      className={`transform-gpu transition-all duration-200 ease-out ${
+        isScreenVisible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-2 opacity-0"
+      }`}
+    >
+      {renderScreen(renderedStatus)}
     </div>
   );
 }
