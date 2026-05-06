@@ -410,7 +410,7 @@ export default function App() {
       className={`transform-gpu transition-all duration-200 ease-out ${
         isScreenVisible
           ? "translate-y-0 opacity-100"
-          : "translate-y-2 opacity-0"
+          : "translate-y-2 opacity-0 overflow-hidden"
       }`}
     >
       {renderScreen(renderedStatus)}

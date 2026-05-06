@@ -105,7 +105,7 @@ export default function LoadingScreen({
   }, [dispatch, inputText, uploadedFiles]);
 
   return (
-    <div className="dark bg-background text-on-surface font-body min-h-screen flex flex-col overflow-hidden relative">
+    <div className="dark bg-background text-on-surface font-body h-svh flex flex-col overflow-hidden relative">
       {/* Atmospheric Background */}
       <div className="fixed inset-0 glow-bg pointer-events-none z-0"></div>
       <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -113,7 +113,7 @@ export default function LoadingScreen({
 
       <LoadingHeader />
 
-      <main className="flex-grow flex items-start sm:items-center justify-center px-4 sm:px-6 pt-24 sm:pt-28 pb-10 relative z-10">
+      <main className="flex-grow flex items-center justify-center px-4 sm:px-6 pt-16 pb-10 relative z-10">
         <LoadingCard
           uploadedFiles={uploadedFiles}
           loadingStage={loadingStage}

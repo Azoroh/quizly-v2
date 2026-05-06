@@ -4,7 +4,7 @@
 
 Quizly is a premium AI study tool that lets users paste notes or upload a PDF/document and generates a comprehensive, personalized quiz from that material.
 
-🔗 **[Live Preview](https://jay-quizly-v2.netlify.app)**
+🔗 **[Live Preview](https://jay-quizly.netlify.app)**
 
 ---
 

@@ -60,7 +60,7 @@ export default function StartScreen({
   }
 
   return (
-    <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-start overflow-x-hidden relative">
+    <div className="dark bg-surface text-on-surface font-body selection:bg-primary/30 h-svh flex flex-col items-center overflow-hidden relative">
       {/* Atmospheric Background */}
       <div className="fixed inset-0 glow-bg pointer-events-none z-0"></div>
       <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -68,7 +68,7 @@ export default function StartScreen({
 
       <StartHeader />
 
-      <main className="relative z-10 w-full max-w-2xl px-4 sm:px-6 pt-24 sm:pt-28 pb-10 sm:pb-12 flex flex-col items-center text-center">
+      <main className="relative z-10 w-full max-w-2xl px-4 flex-grow flex flex-col items-center justify-center text-center pt-16 pb-6">
         {shouldRenderToast && toastMessage ? (
           <ToastMessage
             onTransitionEnd={handleToastTransitionEnd}

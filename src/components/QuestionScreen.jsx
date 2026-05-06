@@ -19,7 +19,7 @@ export default function QuestionScreen({
   // console.log(curQuestion);
 
   return (
-    <div className="dark bg-background text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+    <div className="dark bg-background text-on-surface h-svh flex flex-col overflow-hidden">
       {/* Atmospheric Background */}
       <div className="fixed inset-0 glow-bg pointer-events-none z-0"></div>
       <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -28,7 +28,7 @@ export default function QuestionScreen({
       {/* Nav */}
       {/* <StartHeader /> */}
 
-      <main className="flex-grow flex items-start sm:items-center justify-center px-3 sm:px-6 pt-18 sm:pt-24 pb-6 sm:pb-12">
+      <main className="flex-grow flex items-center justify-center px-3 sm:px-6 pt-4 pb-4">
         <div className="w-full max-w-3xl">
           <QuestionCard answer={answer}>
             <QuestionHeader
